@@ -47,11 +47,12 @@ class Changer(object):
             
             tmp = []
             for token in tokens[0][0]:
-                if token[:2] in lk:
+                ft = (token.form, token.tag)
+                if ft in lk:
                     #key로 value
-                    token = informaldic().get(token[:2])
-                if token[:2] in ak:
-                    token = abnormaldic().get(token[:2])
+                    token = informaldic().get(ft)
+                if ft in ak:
+                    token = abnormaldic().get(ft)
                 tmp.append(token)
 
             changed = ''
@@ -158,23 +159,24 @@ class Changer(object):
         num = len(tokens[0][0])
         result = []
         for idx, token in enumerate(tokens[0][0]):
+            ft = (token.form, token.tag)
             if idx > int(num*0.8):        
-                if token[:2] in lk:
+                if ft in lk:
                     #key로 value
-                    token = formaldic().get(token[:2])
+                    token = formaldic().get(ft)
                     result.append(token)
                 else:
-                    if token[:2] in ak:
-                        token = abnormaldic().get(token[:2])
+                    if ft in ak:
+                        token = abnormaldic().get(ft)
                         result.append(token)
                     else:
-                        result.append(token[:2])
+                        result.append(ft)
             else:
-                if token[:2] in ak:
-                    token = abnormaldic().get(token[:2])
+                if ft in ak:
+                    token = abnormaldic().get(ft)
                     result.append(token)
                 else:
-                    result.append(token[:2])
+                    result.append(ft)
                 
         # change tuple to text
         changed = ''
